@@ -41,20 +41,20 @@ procedure draw_rectangle { M p}
 getx mx M
 gety my M
 
-expression ax {mx - 2*p}
+expression ax {mx - 1.2*p}
 expression ay {my - p}
 point A  ax ay
 
-expression bx {mx + 2*p}
+expression bx {mx + 1.2*p}
 expression by {my - p}
 point B  bx by
 
 
-expression cx {mx - 2*p}
+expression cx {mx - 1.2*p}
 expression cy {my + p}
 point C  cx cy
 
-expression dx {mx + 2*p}
+expression dx {mx + 1.2*p}
 expression dy {my + p}
 point D  dx dy
 
@@ -162,32 +162,23 @@ call draw_circle {S p}
 procedure draw_line_on_x_coord {A p}
 {
 getx x A
+gety y A
 expression n {0}
-expression y {50}
 
-while { n < 5 }{
+while { n < 9 }{
 
 point S x y 
 call draw_random_shape {S p}
 
-expression y {y + 10}
+expression y {y + 5}
 expression n {n + 1}
 }
 
 }
 
-expression p {2}
-expression x {10}
-
-expression n_out {0}
-
-point F 0 0 100 100
-getx fx F
-number counter 1
-
-
-point A 10 10
-while {n_out < 20}
+procedure plotting {A p n_out fx counter }
+{
+while {n_out < 13}
 {
 if_then_else {fx > counter}
 {
@@ -199,10 +190,86 @@ expression counter {counter + 3}
 {}
 
 getx x A
-expression x {x + 10}
-point A x 10
+gety y A
+expression x {x + 5}
+point A x y
 expression n_out {n_out + 1}
 }
-animation_frames 50 2
+}
+
+% Koordinatni sistem
+color 200 100 245
+point B 50 50
+%cmark_lt B
+point C 10 50
+%cmark_lt C
+line lbc  C B
+drawline lbc
+
+point D 70 60
+%cmark_lt D
+point E 70 20
+%cmark_lt E
+line lde E D
+drawline lde
+%----------------
+
+%Pozadina slike
+background 100 80 100
+%-------------
+point F 0 0 100 100
+getx fx F
+expression p {2}
+
+
+point A 5 5
+%cmark_lt A
+expression n_outA {0}
+number counterA 0
+
+%-----------------
+getx ax A
+gety ay A
+getx ex E
+gety cy C
+
+
+expression a1x {ex + ax}
+point A1 a1x ay
+%cmark_lt A1
+expression n_outA1 {0}
+expression counterA1 {0}
+
+expression a2y {cy + ay}
+point A2 ax a2y
+%cmark_lt A2
+expression n_outA2 {0}
+expression counterA2 {0}
+
+expression a3x {ex + ax}
+expression a3y {cy + ay}
+point A3 a3x a3y
+%cmark_lt A3
+expression n_outA3 {0}
+expression counterA3 {0}
+
+
+%Pozivanje funkcija za iscrtavanje
+%sa razlicitim pocetnim tackama u
+%odnosu na postojeci koord sistem
+call plotting {A p n_outA fx counterA}
+if_then_else {fx >= 5}
+{
+call plotting {A1 p n_outA1 fx counterA1}
+}{}
+if_then_else {fx >= 10}
+{
+call plotting {A2 p n_outA2 fx counterA2}
+}{}
+if_then_else {fx >=15}
+{
+call plotting {A3 p n_outA3 fx counterA3}
+}{}
+animation_frames 80 2
 
 
