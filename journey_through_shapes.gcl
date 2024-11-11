@@ -159,22 +159,50 @@ call draw_circle {S p}
 }{ }
 }
 
-expression p {2}
+procedure draw_line_on_x_coord {A p}
+{
+getx x A
 expression n {0}
 expression y {50}
-expression x {10}
-
-expression n_out {0}
-
 
 while { n < 5 }{
 
-point S 10 y 
+point S x y 
 call draw_random_shape {S p}
 
 expression y {y + 10}
 expression n {n + 1}
 }
 
+}
+
+expression p {2}
+expression x {10}
+
+expression n_out {0}
+
+point F 0 0 100 100
+getx fx F
+number counter 1
+
+
+point A 10 10
+while {n_out < 20}
+{
+if_then_else {fx > counter}
+{
+
+call draw_line_on_x_coord {A p }
+
+expression counter {counter + 3}
+}
+{}
+
+getx x A
+expression x {x + 10}
+point A x 10
+expression n_out {n_out + 1}
+}
 animation_frames 50 2
+
 
