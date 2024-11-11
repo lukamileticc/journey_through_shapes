@@ -1,0 +1,180 @@
+procedure draw_square { M p }
+{
+getx mx M
+gety my M
+
+expression ax {mx - p}
+expression ay {my - p}
+point A  ax ay
+
+expression bx {mx + p}
+expression by {my - p}
+point B  bx by
+
+
+expression cx {mx - p}
+expression cy {my + p}
+point C  cx cy
+
+expression dx {mx + p}
+expression dy {my + p}
+point D  dx dy
+
+drawsegment A B
+drawsegment A C
+drawsegment C D
+drawsegment B D
+
+random r
+expression r {r*256}
+random g
+expression g {g*256}
+random b
+expression b {b*256}
+
+color r g b 
+fillrectangle A D
+}
+
+procedure draw_rectangle { M p}
+{
+getx mx M
+gety my M
+
+expression ax {mx - 2*p}
+expression ay {my - p}
+point A  ax ay
+
+expression bx {mx + 2*p}
+expression by {my - p}
+point B  bx by
+
+
+expression cx {mx - 2*p}
+expression cy {my + p}
+point C  cx cy
+
+expression dx {mx + 2*p}
+expression dy {my + p}
+point D  dx dy
+
+drawsegment A B
+drawsegment A C
+drawsegment C D
+drawsegment B D
+
+random r
+expression r {r*256}
+random g
+expression g {g*256}
+random b
+expression b {b*256}
+
+color r g b 
+fillrectangle A D
+}
+
+procedure draw_triangle { M p}
+{
+getx mx M
+gety my M
+
+expression ax {mx - p}
+expression ay {my - p}
+point A  ax ay
+
+expression bx {mx + p}
+expression by {my - p}
+point B  bx by
+
+
+expression cx {mx }
+expression cy {my + p}
+point C  cx cy
+
+drawsegment A B
+drawsegment A C
+drawsegment B C
+
+random r
+expression r {r*256}
+random g
+expression g {g*256}
+random b
+expression b {b*256}
+
+color r g b 
+filltriangle A B C
+
+}
+
+procedure draw_circle { M p}
+{
+getx mx M
+gety my M
+
+expression ax {mx }
+expression ay {my }
+point A  ax ay
+
+expression bx {mx + p}
+expression by {my }
+point B  bx by
+
+circle C A B
+
+random r
+expression r {r*256}
+random g
+expression g {g*256}
+random b
+expression b {b*256}
+
+color r g b 
+fillcircle C
+
+}
+
+procedure draw_random_shape { S p }
+{
+random o
+if_then_else {o < 0.25}
+{
+call draw_square {S p}
+}{ }
+
+if_then_else {o > 0.25 && o < 0.5}
+{
+call draw_rectangle {S p}
+}{ }
+
+ if_then_else {o > 0.5 && o < 0.75}
+{
+call draw_triangle {S p}
+}{ }
+
+if_then_else {o > 0.75 && o < 1.0}
+{
+call draw_circle {S p}
+}{ }
+}
+
+expression p {2}
+expression n {0}
+expression y {50}
+expression x {10}
+
+expression n_out {0}
+
+
+while { n < 5 }{
+
+point S 10 y 
+call draw_random_shape {S p}
+
+expression y {y + 10}
+expression n {n + 1}
+}
+
+animation_frames 50 2
+
