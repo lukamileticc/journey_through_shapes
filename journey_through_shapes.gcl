@@ -217,7 +217,7 @@ drawline lde
 %Pozadina slike
 background 100 80 100
 %-------------
-point F 0 0 100 100
+point F 0 0 70 70
 getx fx F
 expression p {2}
 
